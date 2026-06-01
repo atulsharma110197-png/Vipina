@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vipin Singh's Tutorial | Math · Physics · Chemistry</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+:root{
+  --bg:#080c14;
+  --bg2:#0d1220;
+  --bg3:#111827;
+  --card:#131b2e;
+  --card2:#18213a;
+  --gold:#f0b429;
+  --gold2:#ffd166;
+  --blue:#4a9eff;
+  --blue2:#2d7dd2;
+  --glow:rgba(74,158,255,0.18);
+  --glow-gold:rgba(240,180,41,0.15);
+  --border:rgba(255,255,255,0.07);
+  --border2:rgba(74,158,255,0.25);
+  --text:#e8edf5;
+  --text2:#8a9bb8;
+  --text3:#4a5a78;
+  --r:14px;
+  --r2:22px;
+}
+body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--blue2);border-radius:10px}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:0.4;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:70px;
+  background:rgba(8,12,20,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;font-weight:900;color:var(--text);
+  letter-spacing:-0.5px;
+}
+.nav-logo em{color:var(--gold);font-style:normal}
+.nav-links{display:flex;gap:4px;align-items:center}
+.nav-links a{
+  color:var(--text2);text-decoration:none;font-size:0.82rem;font-weight:500;
+  padding:7px 14px;border-radius:8px;transition:all 0.2s;
+}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,0.05)}
+.nav-cta{
+  background:linear-gradient(135deg,#1a6fff,#0d4fc7) !important;
+  color:#fff !important;font-weight:700 !important;
+  padding:8px 20px !important;border-radius:30px !important;
+  box-shadow:0 4px 20px rgba(26,111,255,0.35) !important;
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(26,111,255,0.5) !important}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:22px;height:2px;background:var(--text2);margin:5px 0;border-radius:2px;transition:0.3s}
+
+/* ── HERO ── */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:100px 6% 80px;
+  position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(26,111,255,0.12) 0%,transparent 70%),
+             radial-gradient(ellipse 50% 40% at 80% 80%,rgba(240,180,41,0.06) 0%,transparent 60%);
+}
+.hero-grid-lines{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(74,158,255,0.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(74,158,255,0.04) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);
+}
+.hero-orb{
+  position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;
+}
+.orb1{width:500px;height:500px;top:-150px;left:-100px;background:rgba(26,111,255,0.08)}
+.orb2{width:350px;height:350px;bottom:-100px;right:-80px;background:rgba(240,180,41,0.06)}
+.orb3{width:200px;height:200px;top:40%;left:60%;background:rgba(74,158,255,0.06)}
+
+.hero-content{position:relative;z-index:2;max-width:860px}
+
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid rgba(240,180,41,0.3);
+  background:rgba(240,180,41,0.07);
+  color:var(--gold);font-size:0.75rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:8px 20px;border-radius:30px;margin-bottom:30px;
+  animation:fadeUp 0.6s ease both;
+}
+.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:blink 1.5s ease infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,5.5vw,4.2rem);
+  font-weight:900;line-height:1.1;
+  color:#fff;margin-bottom:24px;
+  animation:fadeUp 0.7s ease 0.1s both;
+}
+.hero h1 .line2{
+  background:linear-gradient(90deg,var(--blue),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:1rem;color:var(--text2);line-height:1.9;
+  max-width:600px;margin:0 auto 40px;
+  animation:fadeUp 0.8s ease 0.2s both;
+}
+
+.hero-pills{
+  display:flex;gap:10px;justify-content:center;flex-wrap:wrap;
+  margin-bottom:44px;animation:fadeUp 0.9s ease 0.3s both;
+}
+.hero-pill{
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.1);
+  color:var(--text);font-size:0.85rem;font-weight:600;
+  padding:10px 22px;border-radius:30px;transition:0.25s;cursor:default;
+}
+.hero-pill:hover{border-color:rgba(74,158,255,0.5);background:rgba(74,158,255,0.08);color:#fff}
+
+.hero-btns{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp 1s ease 0.4s both;
+}
+.btn-gold{
+  background:linear-gradient(135deg,var(--gold),#e6960a);
+  color:#0d1220;font-weight:800;font-size:0.95rem;
+  padding:14px 34px;border-radius:40px;border:none;cursor:pointer;
+  box-shadow:0 6px 28px rgba(240,180,41,0.35);transition:all 0.25s;
+  text-decoration:none;display:inline-block;letter-spacing:0.3px;
+}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 34px rgba(240,180,41,0.5)}
+.btn-ghost{
+  background:transparent;color:var(--text);font-weight:600;font-size:0.9rem;
+  padding:13px 28px;border-radius:40px;border:1px solid rgba(255,255,255,0.15);
+  cursor:pointer;transition:0.25s;text-decoration:none;display:inline-block;
+}
+.btn-ghost:hover{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.04)}
+
+.hero-stats{
+  display:flex;gap:50px;justify-content:center;flex-wrap:wrap;
+  margin-top:70px;padding-top:44px;
+  border-top:1px solid var(--border);
+  animation:fadeUp 1.1s ease 0.5s both;
+}
+.h-stat-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,#fff,var(--blue));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.h-stat-num em{font-style:normal;color:var(--gold);-webkit-text-fill-color:var(--gold)}
+.h-stat-label{font-size:0.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── SECTION COMMON ── */
+section{padding:90px 6%;position:relative}
+.s-tag{
+  display:inline-block;
+  font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  padding:6px 16px;border-radius:30px;margin-bottom:14px;
+  border:1px solid rgba(74,158,255,0.3);
+  background:rgba(74,158,255,0.07);color:var(--blue);
+}
+.s-tag.gold{border-color:rgba(240,180,41,0.3);background:rgba(240,180,41,0.07);color:var(--gold)}
+.s-title{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,3vw,2.8rem);font-weight:900;color:#fff;line-height:1.2;
+}
+.s-sub{font-size:0.95rem;color:var(--text2);line-height:1.85;max-width:540px;margin-top:10px}
+.center{text-align:center}
+.center .s-sub{margin:10px auto 0}
+
+/* ── GLOWING DIVIDER ── */
+.glow-line{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue2),transparent);
+  border:none;margin:0;
+}
+
+/* ── ABOUT ── */
+.about{background:var(--bg)}
+.about-wrap{
+  display:grid;grid-template-columns:340px 1fr;
+  gap:64px;align-items:center;max-width:1100px;margin:60px auto 0;
+}
+.about-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--r2);
+  padding:40px 32px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.about-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--blue2),var(--gold));
+}
+.about-avatar{
+  width:110px;height:110px;border-radius:50%;
+  background:linear-gradient(135deg,#1a3a6f,#0d4fc7);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Playfair Display',serif;
+  font-size:2.8rem;font-weight:900;color:#fff;
+  margin:0 auto 20px;
+  border:3px solid rgba(74,158,255,0.3);
+  box-shadow:0 0 40px rgba(26,111,255,0.25);
+}
+.about-card-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:4px;
+}
+.about-card-role{color:var(--gold);font-size:0.82rem;font-weight:600;letter-spacing:0.5px;margin-bottom:20px}
+.about-card-line{height:1px;background:var(--border);margin:18px 0}
+.about-meta{display:flex;flex-direction:column;gap:12px;text-align:left}
+.meta-row{display:flex;align-items:flex-start;gap:10px;font-size:0.82rem;color:var(--text2)}
+.meta-icon{
+  width:28px;height:28px;border-radius:7px;
+  background:rgba(74,158,255,0.1);border:1px solid rgba(74,158,255,0.2);
+  display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;
+}
+.meta-row a{color:var(--blue);text-decoration:none}
+.meta-row a:hover{text-decoration:underline}
+
+.about-right{}
+.about-right p{color:var(--text2);font-size:0.96rem;line-height:1.9;margin-bottom:14px}
+.about-chips{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0}
+.chip{
+  background:rgba(255,255,255,0.04);border:1px solid var(--border);
+  color:var(--text2);font-size:0.8rem;font-weight:600;
+  padding:6px 14px;border-radius:20px;
+}
+.about-highlights{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px;
+}
+.highlight-box{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:18px 20px;
+  border-left:3px solid var(--blue2);transition:0.25s;
+}
+.highlight-box:hover{border-left-color:var(--gold);background:var(--card2)}
+.hl-title{font-weight:700;font-size:0.88rem;color:#fff;margin-bottom:4px}
+.hl-desc{font-size:0.78rem;color:var(--text3)}
+
+/* ── SUBJECTS ── */
+.subjects{background:var(--bg2)}
+.sub-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:22px;max-width:1100px;margin:56px auto 0;
+}
+.sub-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:36px 28px;
+  position:relative;overflow:hidden;transition:all 0.35s;cursor:default;
+}
+.sub-card::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at top center, var(--glow-card,rgba(74,158,255,0.05)) 0%,transparent 70%);
+  pointer-events:none;transition:0.35s;
+}
+.sub-card:hover{transform:translateY(-8px);border-color:rgba(74,158,255,0.3)}
+.sub-card:hover::after{opacity:2}
+.sub-card.math{--glow-card:rgba(74,158,255,0.08)}
+.sub-card.physics{--glow-card:rgba(0,200,160,0.08)}
+.sub-card.chemistry{--glow-card:rgba(180,100,255,0.08)}
+.sub-card-top{
+  height:3px;border-radius:3px;margin-bottom:28px;
+}
+.math .sub-card-top{background:linear-gradient(90deg,#4a9eff,#2d7dd2)}
+.physics .sub-card-top{background:linear-gradient(90deg,#00c8a0,#008f70)}
+.chemistry .sub-card-top{background:linear-gradient(90deg,#b464ff,#7b2fff)}
+.sub-icon{
+  width:56px;height:56px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;margin-bottom:20px;
+}
+.math .sub-icon{background:rgba(74,158,255,0.12);border:1px solid rgba(74,158,255,0.2)}
+.physics .sub-icon{background:rgba(0,200,160,0.12);border:1px solid rgba(0,200,160,0.2)}
+.chemistry .sub-icon{background:rgba(180,100,255,0.12);border:1px solid rgba(180,100,255,0.2)}
+.sub-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:10px}
+.sub-card p{color:var(--text2);font-size:0.86rem;line-height:1.8}
+.sub-topics{margin-top:20px;display:flex;flex-direction:column;gap:9px}
+.st{display:flex;align-items:center;gap:9px;font-size:0.82rem;color:var(--text2)}
+.st-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.math .st-dot{background:#4a9eff}
+.physics .st-dot{background:#00c8a0}
+.chemistry .st-dot{background:#b464ff}
+
+/* ── WHY ── */
+.why{background:var(--bg)}
+.why-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:18px;max-width:1100px;margin:56px auto 0;
+}
+.why-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:26px 20px;transition:0.3s;
+}
+.why-card:hover{border-color:rgba(240,180,41,0.3);background:var(--card2);transform:translateY(-4px)}
+.why-icon{font-size:1.8rem;margin-bottom:14px;display:block}
+.why-card h4{font-weight:700;font-size:0.95rem;color:#fff;margin-bottom:7px}
+.why-card p{font-size:0.8rem;color:var(--text3);line-height:1.75}
+
+/* ── CLASSES ── */
+.classes{background:var(--bg2)}
+.cls-tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:36px 0 48px}
+.cls-tab{
+  background:var(--card);border:1px solid var(--border);
+  color:var(--text2);font-family:'Outfit',sans-serif;font-size:0.84rem;font-weight:600;
+  padding:9px 22px;border-radius:30px;cursor:pointer;transition:0.25s;
+}
+.cls-tab:hover,.cls-tab.active{
+  background:linear-gradient(135deg,#1a6fff,#0d4fc7);
+  border-color:transparent;color:#fff;
+  box-shadow:0 4px 18px rgba(26,111,255,0.3);
+}
+.cls-grid{
+  display:grid;grid-template-columns:repeat(5,1fr);
+  gap:16px;max-width:900px;margin:0 auto;
+}
+.cls-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px 16px;text-align:center;
+  cursor:pointer;transition:all 0.25s;position:relative;overflow:hidden;
+}
+.cls-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue2),var(--gold));
+  transform:scaleX(0);transition:0.3s;
+}
+.cls-card:hover::before,.cls-card.active::before{transform:scaleX(1)}
+.cls-card:hover,.cls-card.active{
+  border-color:rgba(74,158,255,0.3);
+  background:linear-gradient(135deg,rgba(26,111,255,0.1),rgba(13,79,199,0.08));
+  transform:translateY(-4px);
+}
+.cls-num{
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;font-weight:900;
+  background:linear-gradient(135deg,var(--blue),var(--gold2));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.cls-label{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* ── MODE ── */
+.mode{background:var(--bg)}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:900px;margin:56px auto 0}
+.mode-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:44px 36px;text-align:center;transition:0.35s;
+  position:relative;overflow:hidden;
+}
+.mode-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--blue2),transparent);
+}
+.mode-card:hover{border-color:rgba(74,158,255,0.3);transform:translateY(-5px);box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.mode-big-icon{font-size:3.2rem;margin-bottom:22px;display:block}
+.mode-card h3{
+  font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#fff;margin-bottom:12px;
+}
+.mode-card p{color:var(--text2);font-size:0.9rem;line-height:1.85}
+.mode-list{margin-top:24px;display:flex;flex-direction:column;gap:12px;text-align:left}
+.ml{display:flex;align-items:center;gap:10px;font-size:0.84rem;color:var(--text2)}
+.ml-check{
+  width:20px;height:20px;border-radius:50%;
+  background:rgba(0,200,120,0.1);border:1px solid rgba(0,200,120,0.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.65rem;color:#00c878;flex-shrink:0;
+}
+
+/* ── REVIEWS ── */
+.reviews{background:var(--bg2)}
+.rev-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;max-width:1100px;margin:56px auto 0;
+}
+.rev-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:28px 24px;
+  transition:0.3s;position:relative;
+}
+.rev-card:hover{border-color:rgba(240,180,41,0.2);transform:translateY(-4px);box-shadow:0 16px 50px rgba(0,0,0,0.3)}
+.rev-quote{
+  position:absolute;top:18px;right:20px;
+  font-family:'Playfair Display',serif;
+  font-size:3.5rem;line-height:0.8;
+  color:rgba(240,180,41,0.12);
+}
+.stars{color:var(--gold);font-size:0.85rem;letter-spacing:2px;margin-bottom:12px}
+.rev-text{color:var(--text2);font-size:0.87rem;line-height:1.85}
+.rev-author{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:18px;border-top:1px solid var(--border)}
+.rev-av{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,#1a3a6f,var(--blue2));
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:0.85rem;color:#fff;flex-shrink:0;
+}
+.rev-name{font-weight:700;font-size:0.85rem;color:#fff}
+.rev-cls{font-size:0.75rem;color:var(--text3)}
+
+/* ── FAQ ── */
+.faq-sec{background:var(--bg)}
+.faq-wrap{max-width:760px;margin:56px auto 0;display:flex;flex-direction:column;gap:12px}
+.faq-item{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;
+}
+.faq-q{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:20px 24px;cursor:pointer;
+  font-weight:600;font-size:0.93rem;color:var(--text);
+  transition:0.2s;gap:16px;
+}
+.faq-q:hover{background:rgba(255,255,255,0.03)}
+.faq-toggle{
+  font-size:1.4rem;font-weight:300;
+  color:var(--blue);flex-shrink:0;
+  transition:transform 0.3s;line-height:1;
+}
+.faq-item.open .faq-toggle{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.4s ease,padding 0.3s;
+  font-size:0.87rem;color:var(--text2);line-height:1.85;
+  padding:0 24px;
+  border-top:0px solid var(--border);
+}
+.faq-item.open .faq-a{max-height:300px;padding:0 24px 20px;border-top-width:1px}
+
+/* ── CONTACT ── */
+.contact{
+  background:var(--bg2);
+}
+.contact-wrap{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;max-width:1060px;margin:56px auto 0;align-items:start;
+}
+.c-info-list{display:flex;flex-direction:column;gap:16px}
+.c-card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r);padding:20px 22px;
+  display:flex;align-items:center;gap:16px;transition:0.25s;
+}
+.c-card:hover{border-color:rgba(74,158,255,0.3);background:var(--card2)}
+.c-icon{
+  width:46px;height:46px;border-radius:12px;
+  background:rgba(74,158,255,0.08);border:1px solid rgba(74,158,255,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;
+}
+.c-label{font-size:0.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.c-val{font-weight:600;color:var(--text);font-size:0.92rem}
+.c-val a{color:var(--blue);text-decoration:none}
+.c-val a:hover{text-decoration:underline}
+
+.c-form{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--r2);padding:38px 32px;
+  position:relative;overflow:hidden;
+}
+.c-form::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--blue2),var(--gold));
+}
+.c-form h3{
+  font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:900;
+  color:#fff;margin-bottom:26px;
+}
+.fg{margin-bottom:16px}
+.fg label{display:block;font-size:0.75rem;font-weight:700;color:var(--text3);margin-bottom:7px;text-transform:uppercase;letter-spacing:0.8px}
+.fg input,.fg select,.fg textarea{
+  width:100%;background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:10px;padding:12px 16px;
+  color:var(--text);font-family:'Outfit',sans-serif;font-size:0.9rem;
+  outline:none;transition:0.2s;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--text3)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:rgba(74,158,255,0.4);background:rgba(74,158,255,0.04);
+}
+.fg select option{background:var(--bg2);color:var(--text)}
+.fg textarea{resize:vertical;min-height:90px}
+.c-submit{
+  width:100%;
+  background:linear-gradient(135deg,var(--gold),#e6960a);
+  color:#0d1220;font-family:'Outfit',sans-serif;font-weight:800;font-size:0.95rem;
+  padding:14px;border-radius:40px;border:none;cursor:pointer;
+  box-shadow:0 6px 24px rgba(240,180,41,0.3);transition:all 0.25s;letter-spacing:0.3px;
+}
+.c-submit:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(240,180,41,0.4)}
+.c-note{text-align:center;color:var(--text3);font-size:0.76rem;margin-top:12px}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:44px 6%;text-align:center;
+}
+.f-logo{
+  font-family:'Playfair Display',serif;font-weight:900;font-size:1.5rem;color:#fff;margin-bottom:10px;
+}
+.f-logo em{color:var(--gold);font-style:normal}
+footer p{color:var(--text3);font-size:0.84rem;margin-bottom:20px}
+.f-links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:16px 0}
+.f-links a{color:var(--text2);text-decoration:none;font-size:0.83rem;transition:0.2s}
+.f-links a:hover{color:var(--gold)}
+.f-copy{color:var(--text3);font-size:0.76rem;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+
+/* ── SCROLL TOP ── */
+#scrollTop{
+  position:fixed;bottom:28px;right:28px;z-index:999;
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue2),#1a6fff);
+  color:#fff;font-size:1rem;
+  border:none;cursor:pointer;
+  box-shadow:0 4px 20px rgba(26,111,255,0.4);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:all 0.3s;
+}
+#scrollTop.show{opacity:1;pointer-events:all}
+#scrollTop:hover{transform:translateY(-3px)}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:linear-gradient(135deg,#00a862,#007d49);color:#fff;
+  padding:14px 28px;border-radius:40px;
+  font-weight:700;font-size:0.88rem;
+  box-shadow:0 8px 28px rgba(0,168,98,0.35);
+  transition:transform 0.4s ease;z-index:9999;pointer-events:none;
+  border:1px solid rgba(255,255,255,0.1);
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+/* ── MOBILE MENU ── */
+.mmenu{
+  position:fixed;inset:0;background:rgba(8,12,20,0.97);
+  backdrop-filter:blur(20px);z-index:999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+.mmenu.open{opacity:1;pointer-events:all}
+.mmenu a{color:var(--text);text-decoration:none;font-size:1.3rem;font-weight:600;padding:10px 30px;border-radius:10px;transition:0.2s}
+.mmenu a:hover{background:rgba(255,255,255,0.05);color:var(--gold)}
+.mmenu-close{position:absolute;top:22px;right:24px;background:none;border:none;color:var(--text2);font-size:1.8rem;cursor:pointer}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .cls-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:block}
+  .about-wrap{grid-template-columns:1fr;gap:32px}
+  .sub-grid{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr 1fr}
+  .cls-grid{grid-template-columns:repeat(3,1fr)}
+  .mode-grid{grid-template-columns:1fr}
+  .rev-grid{grid-template-columns:1fr}
+  .contact-wrap{grid-template-columns:1fr;gap:32px}
+  .about-highlights{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  section{padding:60px 5%}
+  .hero{padding:90px 5% 60px}
+  .why-grid{grid-template-columns:1fr}
+  .cls-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-stats{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Vipin<em>Singh's</em></div>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#subjects">Subjects</a>
+    <a href="#classes">Classes</a>
+    <a href="#mode">Mode</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact" class="nav-cta">Enroll Now</a>
+  </div>
+  <button class="hamburger" id="menuBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mmenu" id="mobileMenu">
+  <button class="mmenu-close" id="closeMenu">✕</button>
+  <a href="#about" onclick="closeMM()">About</a>
+  <a href="#subjects" onclick="closeMM()">Subjects</a>
+  <a href="#classes" onclick="closeMM()">Classes</a>
+  <a href="#mode" onclick="closeMM()">Mode</a>
+  <a href="#reviews" onclick="closeMM()">Reviews</a>
+  <a href="#faq" onclick="closeMM()">FAQ</a>
+  <a href="#contact" onclick="closeMM()" style="background:linear-gradient(135deg,#f0b429,#e6960a);color:#0d1220;font-weight:800;border-radius:30px;margin-top:8px">Enroll Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-orb orb1"></div>
+  <div class="hero-orb orb2"></div>
+  <div class="hero-orb orb3"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-dot"></div>
+      Now Enrolling · Classes 8 to 12
+    </div>
+    <h1>
+      Master Science &amp; Math<br>
+      <span class="line2">With Clarity &amp; Confidence</span>
+    </h1>
+    <p class="hero-desc">
+      Expert one-on-one and group coaching in Mathematics, Physics &amp; Chemistry for Class 8–12 students. Both online and offline. Based in Mumbai.
+    </p>
+    <div class="hero-pills">
+      <div class="hero-pill">📐 Mathematics</div>
+      <div class="hero-pill">⚛️ Physics</div>
+      <div class="hero-pill">🧪 Chemistry</div>
+      <div class="hero-pill">🌐 Online &amp; Offline</div>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">Enroll Now — Free Inquiry</a>
+      <a href="#subjects" class="btn-ghost">Explore Subjects →</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="h-stat-num">8–12<em>th</em></div>
+        <div class="h-stat-label">Classes Covered</div>
+      </div>
+      <div>
+        <div class="h-stat-num">3</div>
+        <div class="h-stat-label">Core Subjects</div>
+      </div>
+      <div>
+        <div class="h-stat-num">2<em>×</em></div>
+        <div class="h-stat-label">Teaching Modes</div>
+      </div>
+      <div>
+        <div class="h-stat-num">100<em>%</em></div>
+        <div class="h-stat-label">Concept Focus</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-wrap">
+    <div class="about-card">
+      <div class="about-avatar">VS</div>
+      <div class="about-card-name">Vipin Singh</div>
+      <div class="about-card-role">⭐ Math · Physics · Chemistry Tutor</div>
+      <div class="about-card-line"></div>
+      <div class="about-meta">
+        <div class="meta-row">
+          <div class="meta-icon">📧</div>
+          <span><a href="mailto:vipin.singh0118@gmail.com">vipin.singh0118@gmail.com</a></span>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">📞</div>
+          <span><a href="tel:9833391296">9833391296</a></span>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">📍</div>
+          <span>Mumbai, India</span>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">🎓</div>
+          <span>Classes 8th to 12th Standard</span>
+        </div>
+        <div class="meta-row">
+          <div class="meta-icon">🌐</div>
+          <span>Online &amp; Offline Teaching</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="s-tag">About the Tutor</div>
+      <div class="s-title">Dedicated to Making<br>Learning Effortless</div>
+      <p style="margin-top:18px">I am a dedicated and passionate tutor based in Mumbai, specializing in Mathematic
+s, Physics, and Chemistry for students of Classes 8 through 12.</p>
+      <p>My teaching philosophy is built on simplicity and smart methods — breaking down complex topics into clear, memorable steps. Every concept is taught at the root level before moving forward, ensuring no student feels lost.</p>
+      <p>Whether a student is starting from basics or preparing for advanced board exams, my approach is fully adaptable. I cover everything from fundamental concepts to advanced problem-solving techniques.</p>
+      <div class="about-chips">
+        <div class="chip">📐 Mathematics</div>
+        <div class="chip">⚛️ Physics</div>
+        <div class="chip">🧪 Chemistry</div>
+        <div class="chip">🎯 Smart Methods</div>
+        <div class="chip">📚 Basic to Advanced</div>
+        <div class="chip">💬 Doubt Sessions</div>
+      </div>
+      <div class="about-highlights">
+        <div class="highlight-box">
+          <div class="hl-title">Easy Teaching Style</div>
+          <div class="hl-desc">Complex concepts made simple with step-by-step explanations</div>
+        </div>
+        <div class="highlight-box">
+          <div class="hl-title">Smart Techniques</div>
+          <div class="hl-desc">Shortcuts and memory methods for faster problem solving</div>
+        </div>
+        <div class="highlight-box">
+          <div class="hl-title">Full Coverage</div>
+          <div class="hl-desc">Basic to advanced — all levels covered for every student</div>
+        </div>
+        <div class="highlight-box">
+          <div class="hl-title">Personal Attention</div>
+          <div class="hl-desc">Each student's doubts addressed with individual focus</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- SUBJECTS -->
+<section class="subjects" id="subjects">
+  <div class="center">
+    <div class="s-tag">What I Teach</div>
+    <div class="s-title">Three Subjects. Expert Depth.</div>
+    <p class="s-sub">Each subject taught with real understanding — from fundamentals to board-level advanced problems.</p>
+  </div>
+  <div class="sub-grid">
+    <div class="sub-card math">
+      <div class="sub-card-top"></div>
+      <div class="sub-icon">📐</div>
+      <h3>Mathematics</h3>
+      <p>Building strong mathematical logic with structured problem solving, step-by-step methods, and exam-ready strategies.</p>
+      <div class="sub-topics">
+        <div class="st"><div class="st-dot"></div>Algebra &amp; Linear Equations</div>
+        <div class="st"><div class="st-dot"></div>Geometry &amp; Trigonometry</div>
+        <div class="st"><div class="st-dot"></div>Calculus (Basics to Advanced)</div>
+        <div class="st"><div class="st-dot"></div>Statistics &amp; Probability</div>
+        <div class="st"><div class="st-dot"></div>Number Systems &amp; Arithmetic</div>
+      </div>
+    </div>
+    <div class="sub-card physics">
+      <div class="sub-card-top"></div>
+      <div class="sub-icon">⚛️</div>
+      <h3>Physics</h3>
+      <p>Understanding physical laws through real-world examples, numerical practice, and concept-first teaching for lasting clarity.</p>
+      <div class="sub-topics">
+        <div class="st"><div class="st-dot"></div>Mechanics &amp; Laws of Motion</div>
+        <div class="st"><div class="st-dot"></div>Electricity &amp; Magnetism</div>
+        <div class="st"><div class="st-dot"></div>Light, Sound &amp; Waves</div>
+        <div class="st"><div class="st-dot"></div>Heat &amp; Thermodynamics</div>
+        <div class="st"><div class="st-dot"></div>Modern Physics Concepts</div>
+      </div>
+    </div>
+    <div class="sub-card chemistry">
+      <div class="sub-card-top"></div>
+      <div class="sub-icon">🧪</div>
+      <h3>Chemistry</h3>
+      <p>Making chemistry approachable — from elements to reactions, with memory techniques for formulas and balanced equations.</p>
+      <div class="sub-topics">
+        <div class="st"><div class="st-dot"></div>Atomic Structure &amp; Bonding</div>
+        <div class="st"><div class="st-dot"></div>Periodic Table &amp; Elements</div>
+        <div class="st"><div class="st-dot"></div>Chemical Reactions &amp; Equations</div>
+        <div class="st"><div class="st-dot"></div>Acids, Bases &amp; Salts</div>
+        <div class="st"><div class="st-dot"></div>Organic Chemistry Basics</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="center">
+    <div class="s-tag gold">Why Choose Me</div>
+    <div class="s-title">Teaching That Actually Works</div>
+    <p class="s-sub">My approach is designed for real understanding — not just passing exams.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card">
+      <span class="why-icon">💡</span>
+      <h4>Easy Teaching Method</h4>
+      <p>Difficult concepts broken into simple, memorable steps that students can grasp quickly.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🧠</span>
+      <h4>Smart Techniques</h4>
+      <p>Shortcuts and structured approaches that help students solve problems faster in exams.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📊</span>
+      <h4>Basic to Advanced</h4>
+      <p>Starting from the foundation, progressively building to advanced topics at your pace.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🎯</span>
+      <h4>Exam-Oriented Practice</h4>
+      <p>Regular mock questions and board exam strategies to build exam confidence.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">🌐</span>
+      <h4>Online &amp; Offline</h4>
+      <p>Flexible modes — attend live online from anywhere or in-person at Mumbai
+
+
+
+
+
+
+
+
+
+
+
+
+
+.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">👤</span>
+      <h4>Individual Attention</h4>
+      <p>Every student's pace and doubts are addressed personally. No one is left behind.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">📝</span>
+      <h4>Systematic Revision</h4>
+      <p>Regular revision of all key topics so nothing is forgotten before the exam.</p>
+    </div>
+    <div class="why-card">
+      <span class="why-icon">💬</span>
+      <h4>Doubt Clearing</h4>
+      <p>Dedicated doubt sessions — students always move forward with full confidence.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- CLASSES -->
+<section class="classes" id="classes">
+  <div class="center">
+    <div class="s-tag">Class Coverage</div>
+    <div class="s-title">Classes 8 to 12</div>
+    <p class="s-sub">All standards covered with curriculum aligned to CBSE and state board requirements.</p>
+  </div>
+  <div class="cls-tabs">
+    <button class="cls-tab active" onclick="setTab(this,'all')">All Classes</button>
+    <button class="cls-tab" onclick="setTab(this,'math')">Mathematics</button>
+    <button class="cls-tab" onclick="setTab(this,'physics')">Physics</button>
+    <button class="cls-tab" onclick="setTab(this,'chemistry')">Chemistry</button>
+  </div>
+  <div class="cls-grid">
+    <div class="cls-card" onclick="pickClass(this)">
+      <div class="cls-num">8</div>
+      <div class="cls-label">Standard</div>
+    </div>
+    <div class="cls-card" onclick="pickClass(this)">
+      <div class="cls-num">9</div>
+      <div class="cls-label">Standard</div>
+    </div>
+    <div class="cls-card" onclick="pickClass(this)">
+      <div class="cls-num">10</div>
+      <div class="cls-label">Standard</div>
+    </div>
+    <div class="cls-card" onclick="pickClass(this)">
+      <div class="cls-num">11</div>
+      <div class="cls-label">Standard</div>
+    </div>
+    <div class="cls-card" onclick="pickClass(this)">
+      <div class="cls-num">12</div>
+      <div class="cls-label">Standard</div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- MODE -->
+<section class="mode" id="mode">
+  <div class="center">
+    <div class="s-tag gold">Teaching Mode</div>
+    <div class="s-title">Learn Your Way</div>
+    <p class="s-sub">Two flexible modes to fit your schedule and location.</p>
+  </div>
+  <div class="mode-grid">
+    <div class="mode-card">
+      <span class="mode-big-icon">🌐</span>
+      <h3>Online Classes</h3>
+      <p>Learn from home with live interactive video sessions, digital study materials, and easy access from anywhere in India.</p>
+      <div class="mode-list">
+        <div class="ml"><div class="ml-check">✓</div>Live one-on-one or group video sessions</div>
+        <div class="ml"><div class="ml-check">✓</div>Study materials shared digitally</div>
+        <div class="ml"><div class="ml-check">✓</div>Flexible timing for remote students</div>
+        <div class="ml"><div class="ml-check">✓</div>Doubt clearing via chat or call</div>
+        <div class="ml"><div class="ml-check">✓</div>Available for students across India</div>
+      </div>
+    </div>
+    <div class="mode-card">
+      <span class="mode-big-icon">🏫</span>
+      <h3>Offline Classes</h3>
+      <p>In-person sessions at Mumbai,  with face-to-face teaching, whiteboard explanations, and personal interaction.</p>
+      <div class="mode-list">
+        <div class="ml"><div class="ml-check">✓</div>Direct classroom experience</div>
+        <div class="ml"><div class="ml-check">✓</div>Whiteboard &amp; notes-based teaching</div>
+        <div class="ml"><div class="ml-check">✓</div>Hands-on problem solving together</div>
+        <div class="ml"><div class="ml-check">✓</div>Immediate on-the-spot doubt resolution</div>
+        <div class="ml"><div class="ml-check">✓</div>For local students in Mumbai area</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="center">
+    <div class="s-tag">Student Reviews</div>
+    <div class="s-title">What Students Say</div>
+    <p class="s-sub">Genuine feedback from students who have studied with Vipin Sir.</p>
+  </div>
+  <div class="rev-grid">
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">The way Vipin Sir explains maths is remarkable. Complex formulas suddenly made sense. I scored much better in my board exams after joining these classes.</p>
+      <div class="rev-author">
+        <div class="rev-av">RS</div>
+        <div><div class="rev-name">Ravi S.</div><div class="rev-cls">Class 10 Student</div></div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Physics used to be my weakest subject. After a few months with Vipin Sir, I started solving numerical problems with real confidence. Highly recommended!</p>
+      <div class="rev-author">
+        <div class="rev-av">PK</div>
+        <div><div class="rev-name">Priya K.</div><div class="rev-cls">Class 12 Student</div></div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">Chemistry felt impossible before. Sir's smart teaching made reactions and formulas easy to remember. The techniques he shares are genuinely very helpful.</p>
+      <div class="rev-author">
+        <div class="rev-av">AM</div>
+        <div><div class="rev-name">Ankit M.</div><div class="rev-cls">Class 11 Student</div></div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">I took online classes from another city and it was a great experience. Sir is very patient and always available to clear doubts. Thank you so much!</p>
+      <div class="rev-author">
+        <div class="rev-av">SL</div>
+        <div><div class="rev-name">Sneha L.</div><div class="rev-cls">Class 9 Student (Online)</div></div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">My son was struggling with Class 8 Maths. After two months with Vipin Sir, he started enjoying the subject and his scores improved significantly.</p>
+      <div class="rev-author">
+        <div class="rev-av">GD</div>
+        <div><div class="rev-name">Geeta D.</div><div class="rev-cls">Parent of Class 8 Student</div></div>
+      </div>
+    </div>
+    <div class="rev-card">
+      <div class="rev-quote">"</div>
+      <div class="stars">★★★★★</div>
+      <p class="rev-text">The basic-to-advanced approach is excellent. Starting from fundamentals gave me the confidence to tackle tougher problems. I feel ready for competitive exams now.</p>
+      <div class="rev-author">
+        <div class="rev-av">VT</div>
+        <div><div class="rev-name">Vivek T.</div><div class="rev-cls">Class 12 Student</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- FAQ -->
+<section class="faq-sec" id="faq">
+  <div class="center">
+    <div class="s-tag gold">FAQ</div>
+    <div class="s-title">Frequently Asked Questions</div>
+    <p class="s-sub">Everything you need to know before enrolling.</p>
+  </div>
+  <div class="faq-wrap">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Which classes do you teach?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">I teach students from Class 8 to Class 12 in Mathematics, Physics, and Chemistry. All standards are covered with full curriculum alignment.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Are online classes available?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes. I offer both online and offline teaching. Online classes are conducted via live video and are open to students anywhere in India. Offline classes are in Mumbai.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Do you teach from basic or advanced level?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Both. Every student starts with a strong foundation and we progressively move to advanced topics. No prior preparation is needed to join.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">How can I contact or enroll?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">You can email vipin.singh0118@gmail.com or call/WhatsApp 9833391296. You can also fill the inquiry form on this page and I'll get back to you quickly.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">What is the teaching method?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">I use a concept-first, step-by-step approach — simplifying topics with real examples, smart memory techniques, and structured problem solving. The goal is genuine understanding, not rote learning.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Are doubt-clearing sessions available?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">Yes. Dedicated doubt-clearing time is part of every session. Students can also reach out between classes via WhatsApp or call for quick help.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Is the teaching useful for competitive exams?<span class="faq-toggle">+</span></div>
+      <div class="faq-a">While the primary focus is board exams for Classes 8–12, the strong conceptual foundation built is directly helpful for JEE, NEET foundation, and science olympiad preparation.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="glow-line">
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="center">
+    <div class="s-tag">Contact</div>
+    <div class="s-title">Enroll or Inquire Today</div>
+    <p class="s-sub">Reach out directly or fill the form — I'll respond promptly.</p>
+  </div>
+  <div class="contact-wrap">
+    <div class="c-info-list">
+      <div class="c-card">
+        <div class="c-icon">📧</div>
+        <div><div class="c-label">Email</div><div class="c-val"><a href="mailto:vipin.singh0118@gmail.com">vipin.singh0118@gmail.com</a></div></div>
+      </div>
+      <div class="c-card">
+        <div class="c-icon">📞</div>
+        <div><div class="c-label">Phone / WhatsApp</div><div class="c-val"><a href="tel:9833391296">9833391296</a></div></div>
+      </div>
+      <div class="c-card">
+        <div class="c-icon">📍</div>
+        <div><div class="c-label">Location</div><div class="c-val"> Mumbai, India</div></div>
+      </div>
+      <div class="c-card">
+        <div class="c-icon">🎓</div>
+        <div><div class="c-label">Classes</div><div class="c-val">8th to 12th Standard</div></div>
+      </div>
+      <div class="c-card">
+        <div class="c-icon">🌐</div>
+        <div><div class="c-label">Teaching Mode</div><div class="c-val">Online &amp; Offline</div></div>
+      </div>
+    </div>
+    <div class="c-form">
+      <h3>Send an Inquiry</h3>
+      <div class="fg">
+        <label>Your Name</label>
+        <input type="text" id="fn" placeholder="Full name">
+      </div>
+      <div class="fg">
+        <label>Phone Number</label>
+        <input type="tel" id="fp" placeholder="Your phone number">
+      </div>
+      <div class="fg">
+        <label>Email (Optional)</label>
+        <input type="email" id="fe" placeholder="Your email address">
+      </div>
+      <div class="fg">
+        <label>Class / Standard</label>
+        <select id="fc">
+          <option value="">Select your class</option>
+          <option>Class 8</option><option>Class 9</option><option>Class 10</option>
+          <option>Class 11</option><option>Class 12</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Subject</label>
+        <select id="fs">
+          <option value="">Select subject</option>
+          <option>Mathematics</option><option>Physics</option><option>Chemistry</option>
+          <option>Math + Physics</option><option>Math + Chemistry</option>
+          <option>Physics + Chemistry</option><option>All Three Subjects</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Preferred Mode</label>
+        <select id="fm">
+          <option value="">Select mode</option>
+          <option>Online</option><option>Offline (Mumbai)</option><option>Either Works</option>
+        </select>
+      </div>
+      <div class="fg">
+        <label>Message (Optional)</label>
+        <textarea id="fmsg" placeholder="Any specific questions or requirements..."></textarea>
+      </div>
+      <button class="c-submit" onclick="submitForm()">Send Inquiry →</button>
+      <p class="c-note">Your information is kept private. No spam.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">Vipin<em>Singh's</em> Tutorial</div>
+  <p>Math · Physics · Chemistry &nbsp;|&nbsp; Classes 8–12 &nbsp;|&nbsp; Mumbai,</p>
+  <div class="f-links">
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#subjects">Subjects</a>
+    <a href="#classes">Classes</a>
+    <a href="#mode">Mode</a>
+    <a href="#reviews">Reviews</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div style="display:flex;gap:20px;justify-content:center;margin:14px 0;flex-wrap:wrap">
+    <a href="mailto:vipin.singh0118@gmail.com" style="color:#4a9eff;text-decoration:none;font-size:0.83rem">📧 vipin.singh0118@gmail.com</a>
+    <a href="tel:9833391296" style="color:#4a9eff;text-decoration:none;font-size:0.83rem">📞 9833391296</a>
+  </div>
+  <div class="f-copy">© 2025 Vipin Singh's Tutorial · All rights reserved · Mumbai, India</div>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+<div id="toast">✅ Inquiry sent! Vipin Sir will contact you soon.</div>
+
+<script>
+document.getElementById('menuBtn').onclick=()=>document.getElementById('mobileMenu').classList.add('open');
+document.getElementById('closeMenu').onclick=()=>document.getElementById('mobileMenu').classList.remove('open');
+function closeMM(){document.getElementById('mobileMenu').classList.remove('open')}
+
+window.addEventListener('scroll',()=>{
+  const b=document.getElementById('scrollTop');
+  window.scrollY>400?b.classList.add('show'):b.classList.remove('show');
+});
+
+function toggleFaq(el){
+  const item=el.parentElement;
+  const open=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!open)item.classList.add('open');
+}
+
+function pickClass(el){
+  document.querySelectorAll('.cls-card').forEach(c=>c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function setTab(el,type){
+  document.querySelectorAll('.cls-tab').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function submitForm(){
+  const name=document.getElementById('fn').value.trim();
+  const phone=document.getElementById('fp').value.trim();
+  const cls=document.getElementById('fc').value;
+  const subj=document.getElementById('fs').value;
+  if(!name||!phone||!cls||!subj){
+    alert('Please fill in your name, phone number, class, and subject to proceed.');
+    return;
+  }
+  const t=document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),4000);
+  ['fn','fp','fe','fc','fs','fm','fmsg'].forEach(id=>{document.getElementById(id).value=''});
+}
+
+// Subtle scroll-reveal
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.sub-card,.why-card,.rev-card,.highlight-box,.mode-card').forEach(el=>{
+  el.style.opacity='0';
+  el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
